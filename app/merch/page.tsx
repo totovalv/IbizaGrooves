@@ -2,7 +2,23 @@ import type { Metadata } from 'next';
 import { prisma } from '@/lib/prisma';
 import MerchCard from '@/components/MerchCard';
 import type { MerchItem } from '@/components/MerchCard';
-import type { MerchItem as PrismaMerchItem } from '@prisma/client';
+
+// Local interface for database response to avoid Prisma generation issues
+interface DbMerchItem {
+  id: string;
+  name: string;
+  slug: string;
+  category: any;
+  description: string | null;
+  imageUrl: string | null;
+  price: any;
+  currency: string;
+  inStock: boolean;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 
 export const revalidate = 300;
 export const dynamic = 'force-dynamic';
@@ -25,10 +41,11 @@ async function getMerchItems(): Promise<MerchItem[]> {
       where: { inStock: true },
       orderBy: { order: 'asc' },
     });
-    return items.map((item: PrismaMerchItem) => ({
+    return items.map((item: DbMerchItem) => ({
       ...item,
       price: Number(item.price),
     })) as MerchItem[];
+
 
   } catch {
     return [];

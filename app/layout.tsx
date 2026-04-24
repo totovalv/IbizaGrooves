@@ -21,9 +21,11 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
   title: "IbizaGrooves — Live Radio & Ibiza Vibes",
   description: "Experience the best Ibiza radio and DJ mixes.",
 };
+
 
 export default function RootLayout({
   children,
