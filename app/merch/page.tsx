@@ -8,16 +8,17 @@ interface DbMerchItem {
   id: string;
   name: string;
   slug: string;
-  category: any;
+  category: string;
   description: string | null;
   imageUrl: string | null;
-  price: any;
+  price: { toNumber: () => number } | number | string;
   currency: string;
   inStock: boolean;
   order: number;
   createdAt: Date;
   updatedAt: Date;
 }
+
 
 
 export const revalidate = 300;
@@ -41,10 +42,18 @@ async function getMerchItems(): Promise<MerchItem[]> {
       where: { inStock: true },
       orderBy: { order: 'asc' },
     });
-    return items.map((item: DbMerchItem) => ({
-      ...item,
-      price: Number(item.price),
-    })) as MerchItem[];
+    return items.map((item: DbMerchItem) => {
+      const priceValue = item.price;
+      const finalPrice = typeof priceValue === 'object' && priceValue !== null && 'toNumber' in priceValue
+        ? (priceValue as { toNumber: () => number }).toNumber()
+        : Number(priceValue);
+
+      return {
+        ...item,
+        price: finalPrice,
+      } as MerchItem;
+    });
+
 
 
   } catch {
