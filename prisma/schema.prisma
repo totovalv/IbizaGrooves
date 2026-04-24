@@ -1,0 +1,113 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Artist {
+  id                String   @id @default(cuid())
+  name              String
+  slug              String   @unique
+  bio               String?
+  photoUrl          String?
+  pressskitUrl      String?
+  pressskitContent  String?
+  isFeatured        Boolean  @default(false)
+  order             Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  mixes             Mix[]
+}
+
+model Mix {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  artistId    String
+  artist      Artist    @relation(fields: [artistId], references: [id])
+  audioUrl    String
+  artworkUrl  String?
+  duration    Int?
+  tracklist   String?
+  playCount   Int       @default(0)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model NewsletterEntry {
+  id            String    @id @default(cuid())
+  title         String
+  slug          String    @unique
+  summary       String?
+  content       String
+  coverImageUrl String?
+  publishedAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+enum MerchCategory {
+  TSHIRT
+  CAP
+  HOODIE
+  STICKER
+  KEYHANGER
+  OTHER
+}
+
+model MerchItem {
+  id          String        @id @default(cuid())
+  name        String
+  slug        String        @unique
+  category    MerchCategory
+  description String?
+  imageUrl    String?
+  price       Decimal       @db.Decimal(10, 2)
+  currency    String        @default("EUR")
+  inStock     Boolean       @default(true)
+  order       Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model RadioStream {
+  id        String   @id @default(cuid())
+  name      String
+  streamUrl String
+  isActive  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Event {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  description String?
+  venue       String?
+  city        String?
+  startDate   DateTime
+  endDate     DateTime?
+  ticketUrl   String?
+  imageUrl    String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Podcast {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  description String?
+  audioUrl    String
+  artworkUrl  String?
+  duration    Int?
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
