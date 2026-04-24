@@ -1,5 +1,6 @@
 import nextDynamic from 'next/dynamic';
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import HeroSection from '@/components/HeroSection';
 import NewsletterSection from '@/components/NewsletterSection';
 import type { NewsletterEntry } from '@/components/NewsletterCard';
@@ -35,8 +36,14 @@ const MOCK_MERCH = [
 
 export default async function HomePage() {
   const newsletterEntries: NewsletterEntry[] = [
-    { id: '1', title: 'The Summer Opening', summary: 'Everything you need to know about the 2024 opening parties.', publishedAt: new Date() },
-    { id: '2', title: 'Top 10 Sunset Spots', summary: 'Hidden gems for the best sunset views in Ibiza.', publishedAt: new Date() },
+    {
+      id: '1', title: 'The Summer Opening', summary: 'Everything you need to know about the 2024 opening parties.', publishedAt: new Date(),
+      slug: ''
+    },
+    {
+      id: '2', title: 'Top 10 Sunset Spots', summary: 'Hidden gems for the best sunset views in Ibiza.', publishedAt: new Date(),
+      slug: ''
+    },
   ];
 
   const mockedMixes: Mix[] = [
@@ -65,8 +72,14 @@ export default async function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {MOCK_ARTISTS.map((artist) => (
               <div key={artist.name} className="group cursor-pointer">
-                <div className="aspect-square rounded-[2rem] overflow-hidden mb-4 shadow-xl group-hover:scale-[1.02] transition-transform duration-500">
-                  <img src={artist.image} alt={artist.name} className="w-full h-full object-cover transition-all duration-500" />
+                <div className="aspect-square rounded-[2rem] overflow-hidden mb-4 shadow-xl group-hover:scale-[1.02] transition-transform duration-500 relative">
+                  <Image 
+                    src={artist.image} 
+                    alt={artist.name} 
+                    fill 
+                    className="object-cover transition-all duration-500"
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                  />
                 </div>
 
                 <h3 className="font-black uppercase italic tracking-tighter text-xl">{artist.name}</h3>
@@ -83,7 +96,7 @@ export default async function HomePage() {
               <h2 className="text-4xl font-black uppercase italic tracking-tighter text-gray-900">
                 Latest <span className="text-orange-500">DJ Mixes</span>
               </h2>
-              <p className="text-gray-500 mt-2 font-medium">Curated sounds from the world's best DJs.</p>
+              <p className="text-gray-500 mt-2 font-medium">Curated sounds from the world&apos;s best DJs.</p>
             </div>
           </div>
           <div className="glass p-2 rounded-[3rem]">
@@ -108,7 +121,13 @@ export default async function HomePage() {
             {MOCK_MERCH.map((item) => (
               <div key={item.name} className="group cursor-pointer">
                 <div className="aspect-[4/5] rounded-[2.5rem] overflow-hidden mb-6 shadow-2xl relative">
-                  <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <Image 
+                    src={item.image} 
+                    alt={item.name} 
+                    fill 
+                    className="object-cover group-hover:scale-110 transition-transform duration-700" 
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
                   <div className="absolute top-6 right-6 bg-white px-4 py-2 rounded-full font-black text-sm shadow-xl">
                     {item.price}
                   </div>
@@ -118,6 +137,7 @@ export default async function HomePage() {
             ))}
           </div>
         </section>
+
 
         {/* Newsletter Section */}
         <section className="relative overflow-hidden rounded-[3rem] bg-orange-50 p-8 md:p-20">

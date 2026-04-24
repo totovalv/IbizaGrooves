@@ -1,14 +1,14 @@
 import { Button } from 'antd';
 
 interface HeroSectionProps {
-  title?: string;
   subtitle?: string;
 }
 
+
 export default function HeroSection({
-  title = 'IbizaGrooves',
   subtitle = 'Live Radio · DJ Mixes · Ibiza Vibes',
 }: HeroSectionProps) {
+
   return (
     <section
       className="relative w-full min-h-[70vh] flex items-center justify-center overflow-hidden bg-[#fdfdfd]"
