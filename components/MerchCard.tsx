@@ -37,26 +37,35 @@ export default function MerchCard({ item }: MerchCardProps) {
   }).format(item.price);
 
   return (
-    <article className="bg-gray-900 rounded-xl overflow-hidden shadow-md hover:shadow-orange-500/20 transition-shadow">
-      <div className="relative w-full aspect-square">
-        <Image
-          src={imageSrc}
-          alt={item.name}
-          fill
-          className="object-cover"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-        />
-      </div>
-      <div className="p-4 flex flex-col gap-2">
-        <span className="inline-block text-xs font-semibold uppercase tracking-wide text-orange-400 bg-orange-400/10 rounded px-2 py-0.5 w-fit">
-          {CATEGORY_LABELS[item.category]}
-        </span>
-        <h3 className="text-white font-bold text-lg leading-snug">{item.name}</h3>
-        {item.description && (
-          <p className="text-gray-400 text-sm line-clamp-3">{item.description}</p>
-        )}
-        <p className="text-orange-300 font-semibold text-base mt-1">{formattedPrice}</p>
+    <article className="group cursor-pointer">
+      <div className="bg-white rounded-[2.5rem] overflow-hidden border border-black/5 shadow-sm group-hover:shadow-2xl group-hover:border-orange-500/10 transition-all duration-500">
+        <div className="relative w-full aspect-[4/5] overflow-hidden">
+          <Image
+            src={imageSrc}
+            alt={item.name}
+            fill
+            className="object-cover group-hover:scale-110 transition-transform duration-700"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+          />
+          <div className="absolute top-6 right-6 bg-white px-4 py-2 rounded-full font-black text-sm shadow-xl z-10">
+            {formattedPrice}
+          </div>
+        </div>
+        <div className="p-8 flex flex-col gap-3">
+          <span className="inline-block text-[10px] font-black uppercase tracking-[0.2em] text-orange-500 bg-orange-50 rounded-full px-4 py-1.5 w-fit">
+            {CATEGORY_LABELS[item.category]}
+          </span>
+          <h3 className="text-gray-900 font-black text-2xl uppercase italic tracking-tighter leading-none group-hover:text-orange-500 transition-colors">
+            {item.name}
+          </h3>
+          {item.description && (
+            <p className="text-gray-500 text-sm font-medium line-clamp-2 leading-relaxed">
+              {item.description}
+            </p>
+          )}
+        </div>
       </div>
     </article>
   );
 }
+
