@@ -10,7 +10,7 @@ import MerchCard from './MerchCard';
 import type { MerchItem } from './MerchCard';
 
 vi.mock('next/image', () => ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @next/next/no-img-element
   default: ({ fill: _fill, ...props }: { fill?: boolean; [key: string]: unknown }) => <img {...props} alt="" />,
 }));
 

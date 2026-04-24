@@ -13,7 +13,7 @@ import ArtistCard from './ArtistCard';
 import type { Artist } from './ArtistCard';
 
 vi.mock('next/image', () => ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @next/next/no-img-element
   default: ({ fill: _fill, ...props }: { fill?: boolean; [key: string]: unknown }) => <img {...props} alt="" />,
 }));
 
